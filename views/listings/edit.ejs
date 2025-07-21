@@ -1,0 +1,92 @@
+    <% layout("/layouts/boilerplate") %>
+
+    <div class="row">
+    <div>
+        <br>
+        <h3>Edit your item</h3>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" name="listing[image]" class="form-control">
+            <% if (listing.image && listing.image.url) { %>
+            <img src="<%= listing.image.url %>" alt="Current Image" width="200" class="mt-2">
+            <% } %>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="listing[title]" class="form-control" value="<%= listing.title %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" rows="3" required><%= listing.description %></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" class="form-select" required>
+            <option disabled selected>Select category</option>
+            <option value="men" <%= listing.category === 'men' ? 'selected' : '' %>>Men</option>
+            <option value="women" <%= listing.category === 'women' ? 'selected' : '' %>>Women</option>
+            <option value="kids" <%= listing.category === 'kids' ? 'selected' : '' %>>Kids</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="type" class="form-label">Type</label>
+            <select name="listing[type]" class="form-select" required>
+            <option disabled selected>Select type</option>
+            <option value="shirt" <%= listing.type === 'shirt' ? 'selected' : '' %>>Shirt</option>
+            <option value="jeans" <%= listing.type === 'jeans' ? 'selected' : '' %>>Jeans</option>
+            <option value="jacket" <%= listing.type === 'jacket' ? 'selected' : '' %>>Jacket</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="size" class="form-label">Size</label>
+            <select name="listing[size]" class="form-select" required>
+            <option disabled selected>Select size</option>
+            <option value="S" <%= listing.size === 'S' ? 'selected' : '' %>>S</option>
+            <option value="M" <%= listing.size === 'M' ? 'selected' : '' %>>M</option>
+            <option value="L" <%= listing.size === 'L' ? 'selected' : '' %>>L</option>
+            <option value="XL" <%= listing.size === 'XL' ? 'selected' : '' %>>XL</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="condition" class="form-label">Condition</label>
+            <select name="listing[condition]" class="form-select" required>
+            <option disabled selected>Select condition</option>
+            <option value="new" <%= listing.condition === 'new' ? 'selected' : '' %>>New</option>
+            <option value="used" <%= listing.condition === 'used' ? 'selected' : '' %>>Used</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="tags" class="form-label">Tags (comma-separated)</label>
+            <input type="text" name="listing[tags]" class="form-control" value="<%= listing.tags %>">
+        </div>
+
+        <button type="submit" class="btn btn-dark">Update Listing</button>
+        </form>
+    </div>
+    </div>
+
+
+        <script>
+            function updateSelectedCategories() {
+            const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+            const selectedCategories = [];
+        
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedCategories.push(checkbox.value);
+                }
+            });
+        
+            document.getElementById('selectedCategories').value = selectedCategories.join(',');
+        }
+        
+        
+        </script>
